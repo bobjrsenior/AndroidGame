@@ -2,16 +2,15 @@ package com.example.androidgame;
 
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
-import java.util.concurrent.ThreadPoolExecutor;
 
 import android.app.Activity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.MotionEvent;
-import android.view.TextureView;
-import android.view.View;
+import android.widget.GridLayout;
 import android.widget.RelativeLayout;
+import android.widget.Space;
 import android.widget.TextView;
 
 
@@ -30,7 +29,7 @@ public class MainActivity extends Activity {
         setContentView(R.layout.activity_main);
         TextView tv = new TextView(this);
         tv.setText("test");
-        RelativeLayout rv = (RelativeLayout) findViewById(R.id.mainLayout);
+        GridLayout rv = (GridLayout) findViewById(R.id.mainLayout);
         //rv.addView(tv);
         TouchEvents activitySwipeDetector = new TouchEvents();
         rv.setOnTouchListener(activitySwipeDetector);
@@ -45,8 +44,8 @@ public class MainActivity extends Activity {
 
     @Override
 	public boolean onTouchEvent(MotionEvent event) {
-    	 xPos = (int) event.getX();
-         yPos = (int) event.getY();
+    	 xPos = (int) event.getRawX();
+         yPos = (int) event.getRawY();
          touching = true;
          int eventaction = event.getAction();
          switch (eventaction) {

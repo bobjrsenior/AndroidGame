@@ -5,24 +5,38 @@ import java.util.ArrayList;
 import android.content.Context;
 import android.os.AsyncTask;
 import android.util.Log;
+import android.view.ViewGroup.LayoutParams;
+import android.widget.GridLayout;
 import android.widget.RelativeLayout;
+import android.widget.Space;
 
 public class UpdaterAsyncTask extends AsyncTask<Void, Void, Void>{
 
 	public static ArrayList<GameObject> toUpdate = new ArrayList<GameObject>();
+	public static ArrayList<GameObject> objectPool = new ArrayList<GameObject>();
+	
 	public float minFrameTime = .04f;
 	
 	public boolean quit = false;
 	
 	public GameObject testObject;
+	public EnemySimple testEnemy;
 	public Context context;
-	public RelativeLayout rv;
+	public GridLayout rv;
 	private boolean cont = true;
 	
-	public UpdaterAsyncTask(Context context, RelativeLayout rv) {
+	public UpdaterAsyncTask(Context context, GridLayout rv) {
+		//Player
 		testObject = new GameObject(context, 30, 30);
+		testObject.setLayoutParams(new LayoutParams(50, 50));
 		this.rv = rv;
 		rv.addView(testObject);
+		
+		//Enemy
+		testEnemy = new EnemySimple(context, 90, 90);
+		testEnemy.setLayoutParams(new LayoutParams(50, 50));
+		this.rv = rv;
+		rv.addView(testEnemy);
 	}
 
 	@Override
@@ -49,7 +63,6 @@ public class UpdaterAsyncTask extends AsyncTask<Void, Void, Void>{
 			}
 			cont = false;
 			publishProgress();
-			
 			while(!cont){
 				
 			}

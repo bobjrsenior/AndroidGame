@@ -8,6 +8,7 @@ public class GameObject extends ImageView{
 	private boolean update;
 	private float x;
 	private float y;
+	private int health;
 	
 	public GameObject(Context c) {
 		super(c);
@@ -32,7 +33,7 @@ public class GameObject extends ImageView{
 	
 	public void translateX(float distance){
 		x += distance;
-//		QueueUpdate();
+		QueueUpdate();
 	}
 	
 	public void translateY(float distance){
@@ -58,6 +59,18 @@ public class GameObject extends ImageView{
 		QueueUpdate();
 	}
 	
+	public void damage(int damage){
+		health -= damage;
+	}	
+	
+	public int getHealth() {
+		return health;
+	}
+
+	public void setHealth(int health) {
+		this.health = health;
+	}
+
 	public void QueueUpdate(){
 		if(!update){
 			update = true;
