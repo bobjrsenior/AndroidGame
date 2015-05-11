@@ -3,12 +3,8 @@ package com.example.androidgame;
 import android.content.Context;
 import android.widget.ImageView;
 
-public class GameObject extends ImageView{
+public abstract class GameObject extends GameObjectAbstract implements GameObjectInterface{
 
-	private boolean update;
-	private float x;
-	private float y;
-	private int health;
 	
 	public GameObject(Context c) {
 		super(c);
@@ -16,7 +12,7 @@ public class GameObject extends ImageView{
 		this.y = 0;
 		setX(0);
 		setY(0);
-		update = false;
+		occasionalUpdate = false;
 		setImageDrawable(getResources().getDrawable(R.drawable.ic_launcher));
 
 	}
@@ -25,38 +21,38 @@ public class GameObject extends ImageView{
 		super(c);
 		this.x = x;
 		this.y = y;
-		super.setX(x);
-		super.setY(y);
-		update = false;
+		setX(x);
+		setY(y);
+		occasionalUpdate = false;
 		setImageDrawable(getResources().getDrawable(R.drawable.ic_launcher));
 	}
 	
 	public void translateX(float distance){
 		x += distance;
-		QueueUpdate();
+		QueueOccasionalUpdate();
 	}
 	
 	public void translateY(float distance){
 		y += distance;
-		QueueUpdate();
+		QueueOccasionalUpdate();
 	}
 
-	public float getX() {
+	public float getXPos() {
 		return x;
 	}
 
-	public void setX(float x) {
+	public void setXPos(float x) {
 		this.x = x;
-		QueueUpdate();
+		QueueOccasionalUpdate();
 	}
 
-	public float getY() {
+	public float getYPos() {
 		return y;
 	}
 
-	public void setY(float y) {
+	public void setYPos(float y) {
 		this.y = y;
-		QueueUpdate();
+		QueueOccasionalUpdate();
 	}
 	
 	public void damage(int damage){
@@ -69,20 +65,6 @@ public class GameObject extends ImageView{
 
 	public void setHealth(int health) {
 		this.health = health;
-	}
-
-	public void QueueUpdate(){
-		if(!update){
-			update = true;
-			UpdaterAsyncTask.toUpdate.add(this);
-		}
-		
-	}
-	
-	public void Update(){
-		super.setX(x);
-		super.setY(y);
-		update = false;
 	}
 
 }

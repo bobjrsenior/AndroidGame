@@ -12,8 +12,9 @@ import android.widget.Space;
 
 public class UpdaterAsyncTask extends AsyncTask<Void, Void, Void>{
 
-	public static ArrayList<GameObject> toUpdate = new ArrayList<GameObject>();
-	public static ArrayList<GameObject> objectPool = new ArrayList<GameObject>();
+	public static ArrayList<GameObjectInterface> toUpdate = new ArrayList<GameObjectInterface>();
+	public static ArrayList<GameObjectInterface> alwaysUpdate = new ArrayList<GameObjectInterface>();
+	public static ArrayList<GameObjectInterface> objectPool = new ArrayList<GameObjectInterface>();
 	
 	public float minFrameTime = .04f;
 	
@@ -27,7 +28,7 @@ public class UpdaterAsyncTask extends AsyncTask<Void, Void, Void>{
 	
 	public UpdaterAsyncTask(Context context, GridLayout rv) {
 		//Player
-		testObject = new GameObject(context, 30, 30);
+		testObject = new Player(context, 50, 50);
 		testObject.setLayoutParams(new LayoutParams(50, 50));
 		this.rv = rv;
 		rv.addView(testObject);
@@ -61,6 +62,10 @@ public class UpdaterAsyncTask extends AsyncTask<Void, Void, Void>{
 				}
 				//MainActivity.touching = false;
 			}
+			for(GameObjectInterface obj : alwaysUpdate){
+				obj.Update();
+			}
+			
 			cont = false;
 			publishProgress();
 			while(!cont){
@@ -86,9 +91,10 @@ public class UpdaterAsyncTask extends AsyncTask<Void, Void, Void>{
 		//}
 		//toUpdate.clear();
 		while(toUpdate.size() > 0){
-			toUpdate.get(0).Update();
+			toUpdate.get(0).OccasionalUpdate();
 			toUpdate.remove(0);			
 		}
+		
 		cont = true;
 		super.onProgressUpdate(values);
 	}

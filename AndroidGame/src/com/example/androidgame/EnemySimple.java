@@ -10,37 +10,54 @@ public class EnemySimple extends Enemy {
 	public EnemySimple(Context c) {
 		super(c);
 		this.direction = (int) (System.nanoTime() % 4);
+		UpdaterAsyncTask.alwaysUpdate.add(this);
 	}
 
 	public EnemySimple(Context c, int x, int y) {
 		super(c, x, y);
 		this.direction = (int) (System.nanoTime() % 4);
+		UpdaterAsyncTask.alwaysUpdate.add(this);
 		Log.d("demo", ":" + direction);
 	}
 
 	@Override
 	public void Update(){
-		int xMovement = 10;
+		int xMovement = 0;
 		int yMovement = 0;
 		
 		switch (direction) {
 		case 0:
-			xMovement = 10;
+			xMovement = 1;
 			break;
 		case 1:
-			xMovement = -10;
+			xMovement = -1;
 			break;
 		case 2:
-			yMovement = 10;
+			yMovement = 1;
 			break;
 		case 3:
-			yMovement = -10;
+			yMovement = -1;
 			break;
 		default:
 			break;
 		}
 		this.translateX(xMovement);
 		this.translateY(yMovement);
-		super.Update();
+		QueueOccasionalUpdate();
+	}
+
+	@Override
+	public void OccasionalUpdate() {
+		setX(x);
+		setY(y);
+		occasionalUpdate = false;
+	}
+
+	@Override
+	public void QueueOccasionalUpdate() {
+		if(!occasionalUpdate){
+			occasionalUpdate = true;
+			UpdaterAsyncTask.toUpdate.add(this);
+		}
 	}
 }
