@@ -30,4 +30,9 @@ public class Player extends GameObject{
 		}
 	}
 
+	@Override
+	public void setUp() {
+		
+	}
+
 }

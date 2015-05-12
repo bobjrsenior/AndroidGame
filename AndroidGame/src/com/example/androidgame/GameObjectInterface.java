@@ -24,4 +24,6 @@ public interface GameObjectInterface {
 	public void QueueOccasionalUpdate();
 	
 	public void OccasionalUpdate();
+	
+	public void setUp();
 }

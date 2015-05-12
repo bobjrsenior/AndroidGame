@@ -9,15 +9,25 @@ public class EnemySimple extends Enemy {
 	
 	public EnemySimple(Context c) {
 		super(c);
-		this.direction = (int) (System.nanoTime() % 4);
-		UpdaterAsyncTask.alwaysUpdate.add(this);
+		setUp();
 	}
 
 	public EnemySimple(Context c, int x, int y) {
 		super(c, x, y);
-		this.direction = (int) (System.nanoTime() % 4);
-		UpdaterAsyncTask.alwaysUpdate.add(this);
+		setUp();
 		Log.d("demo", ":" + direction);
+	}
+	
+	public EnemySimple(Context c, int x, int y, boolean activated) {
+		super(c, x, y, activated);
+		setUp();
+		Log.d("demo", ":" + direction);
+	}
+	
+	@Override
+	public void setUp(){
+		UpdaterAsyncTask.alwaysUpdate.add(this);
+		this.direction = (int) (System.nanoTime() % 4);
 	}
 
 	@Override

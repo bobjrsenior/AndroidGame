@@ -8,23 +8,29 @@ public abstract class GameObject extends GameObjectAbstract implements GameObjec
 	
 	public GameObject(Context c) {
 		super(c);
-		this.x = 0;
-		this.y = 0;
-		setX(0);
-		setY(0);
-		occasionalUpdate = false;
+		resetPosition(0, 0);
 		setImageDrawable(getResources().getDrawable(R.drawable.ic_launcher));
 
 	}
 	
+	
+	public GameObject(Context c, int x, int y, boolean activated) {
+		super(c);
+		resetPosition(x, y);
+	}
+	
 	public GameObject(Context c, int x, int y) {
 		super(c);
+		resetPosition(x, y);
+		setImageDrawable(getResources().getDrawable(R.drawable.ic_launcher));
+	}
+	
+	private void resetPosition(int x, int y){
 		this.x = x;
 		this.y = y;
 		setX(x);
 		setY(y);
 		occasionalUpdate = false;
-		setImageDrawable(getResources().getDrawable(R.drawable.ic_launcher));
 	}
 	
 	public void translateX(float distance){
